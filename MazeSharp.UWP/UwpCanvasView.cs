@@ -4,7 +4,7 @@ using SkiaSharp.Views.UWP;
 
 namespace MazeSharp.UWP
 {
-    public class UwpCanvasView : ICanvasView
+    public class UwpCanvasView : CanvasView
     {
         SKXamlCanvas _canvas;
 
@@ -14,19 +14,24 @@ namespace MazeSharp.UWP
             _canvas.PaintSurface += OnPaintSurface;
         }
 
-        public SKSize CanvasSize => _canvas.CanvasSize;
+        public override void Dispose()
+        {
+            _canvas.PaintSurface -= OnPaintSurface;
+        }
 
-        public bool IgnorePixelScaling
+        public override event EventHandler<PaintSurfaceEventArgs> PaintSurface;
+
+        public override SKSize CanvasSize => _canvas.CanvasSize;
+
+        public override bool IgnorePixelScaling
         {
             get => _canvas.IgnorePixelScaling;
             set => _canvas.IgnorePixelScaling = value;
         }
 
-        public double Dpi => _canvas.Dpi;
+        public override double Dpi => _canvas.Dpi;
 
-        public event EventHandler<PaintSurfaceEventArgs> PaintSurface;
-
-        public void Invalidate()
+        public override void Invalidate()
         {
             _canvas.Invalidate();
         }

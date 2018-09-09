@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using MazeSharp.Algorithms;
 using SkiaSharp;
 
 namespace MazeSharp
@@ -8,6 +9,8 @@ namespace MazeSharp
     public class Game : IDisposable
     {
         ICanvasView _canvas;
+        Maze _maze;
+        IMazeGenerator _algorithm;
         Stopwatch _stopwatch = new Stopwatch();
 
         public bool IsActive { get; set; }
@@ -17,6 +20,9 @@ namespace MazeSharp
             IsActive = true;
             _canvas = canvas;
             _canvas.PaintSurface += OnPaintSurface;
+
+            _maze = new Maze(128, 128);
+            _algorithm = new RecursiveBacktracker(_maze);
         }
 
         public async Task AnimationLoop()

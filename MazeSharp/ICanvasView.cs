@@ -3,7 +3,7 @@ using SkiaSharp;
 
 namespace MazeSharp
 {
-    public interface ICanvasView
+    public interface ICanvasView : IDisposable
     {
         /// <summary>
         /// Gets the current canvas size.
@@ -31,7 +31,6 @@ namespace MazeSharp
         /// </summary>
         double Dpi { get; }
 
-
         /// <summary>
         /// Occurs when the surface needs to be redrawn.
         /// </summary>
@@ -41,7 +40,6 @@ namespace MazeSharp
         /// event.
         /// </remarks>
         event EventHandler<PaintSurfaceEventArgs> PaintSurface;
-
 
         /// <summary>
         /// Invalidates the entire surface of the control and causes the control to be redrawn.
