@@ -1,6 +1,5 @@
-﻿using Windows.UI.Xaml.Controls;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace MazeSharp.UWP
 {
@@ -14,7 +13,18 @@ namespace MazeSharp.UWP
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        async void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
             _game = new Game(new UwpCanvasView(_canvas));
+            await _game.AnimationLoop();
+        }
+
+        void OnPageUnloaded(object sender, RoutedEventArgs e)
+        {
+            _game?.Dispose();
+            _game = null;
         }
     }
 }

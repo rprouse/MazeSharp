@@ -7,6 +7,8 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:skia="using:SkiaSharp.Views.UWP"
   mc:Ignorable="d"
+  Loaded="OnPageLoaded"
+  Unloaded="OnPageUnloaded"
   Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">

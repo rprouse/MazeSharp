@@ -1,19 +1,36 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using SkiaSharp;
 
 namespace MazeSharp
 {
-    public class Game
+    public class Game : IDisposable
     {
         ICanvasView _canvas;
+        Stopwatch _stopwatch = new Stopwatch();
+
+        public bool IsActive { get; set; }
 
         public Game(ICanvasView canvas)
         {
+            IsActive = true;
             _canvas = canvas;
             _canvas.PaintSurface += OnPaintSurface;
         }
 
-        public void OnPaintSurface(object sender, PaintSurfaceEventArgs args)
+        public async Task AnimationLoop()
+        {
+            _stopwatch.Start();
+            while(IsActive)
+            {
+                _canvas.Invalidate();
+                await Task.Delay(TimeSpan.FromSeconds(1.0 / 30));
+            }
+            _stopwatch.Stop();
+        }
+
+        void OnPaintSurface(object sender, PaintSurfaceEventArgs args)
         {
             var surface = args.Surface;
             var info = args.Info;
@@ -34,7 +51,30 @@ namespace MazeSharp
                 TextSize = 24
             };
             var coord = new SKPoint(info.Width / 2, (info.Height + paint.TextSize) / 2);
-            canvas.DrawText("Hello SkiaSharp", coord, paint);
+            canvas.DrawText($"Hello SkiaSharp {_stopwatch.Elapsed.TotalSeconds:0.00} sec", coord, paint);
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // dispose managed state (managed objects).
+                    IsActive = false;
+                    _canvas.PaintSurface -= OnPaintSurface;
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }
