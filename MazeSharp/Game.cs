@@ -5,8 +5,19 @@ namespace MazeSharp
 {
     public class Game
     {
-        public void OnPaintSurface(SKSurface surface, SKImageInfo info)
+        ICanvasView _canvas;
+
+        public Game(ICanvasView canvas)
         {
+            _canvas = canvas;
+            _canvas.PaintSurface += OnPaintSurface;
+        }
+
+        public void OnPaintSurface(object sender, PaintSurfaceEventArgs args)
+        {
+            var surface = args.Surface;
+            var info = args.Info;
+
             // the the canvas and properties
             var canvas = surface.Canvas;
 

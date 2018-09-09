@@ -1,10 +1,4 @@
-﻿using Windows.Graphics.Display;
-using Windows.UI.Xaml.Controls;
-
-using MazeSharp;
-
-using SkiaSharp;
-using SkiaSharp.Views.UWP;
+﻿using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -19,13 +13,8 @@ namespace MazeSharp.UWP
 
         public MainPage()
         {
-            _game = new Game();
             InitializeComponent();
-        }
-
-        private void OnPaintSurface(object sender, SKPaintSurfaceEventArgs e)
-        {
-            _game.OnPaintSurface(e.Surface, e.Info);
+            _game = new Game(new UwpCanvasView(_canvas));
         }
     }
 }
