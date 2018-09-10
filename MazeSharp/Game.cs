@@ -21,9 +21,9 @@ namespace MazeSharp
             _canvas = canvas;
             _canvas.PaintSurface += OnPaintSurface;
 
-            _maze = new Maze(128, 128);
+            _maze = new Maze(32, 32);
             _algorithm = new RecursiveBacktracker(_maze);
-            _canvas.Init(_maze);
+            _canvas.Init(_maze, _algorithm);
         }
 
         public async Task AnimationLoop()
@@ -31,8 +31,11 @@ namespace MazeSharp
             _stopwatch.Start();
             while(IsActive)
             {
+                if (!_algorithm.MazeComplete)
+                    _algorithm.Step();
+
                 _canvas.Invalidate();
-                await Task.Delay(TimeSpan.FromSeconds(1.0 / 30));
+                await Task.Delay(TimeSpan.FromMilliseconds(1.0));
             }
             _stopwatch.Stop();
         }

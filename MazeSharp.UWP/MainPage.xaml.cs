@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.Foundation;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace MazeSharp.UWP
@@ -13,6 +15,9 @@ namespace MazeSharp.UWP
         public MainPage()
         {
             InitializeComponent();
+
+            ApplicationView.PreferredLaunchViewSize = new Size(800, 800);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
         }
 
         async void OnPageLoaded(object sender, RoutedEventArgs e)

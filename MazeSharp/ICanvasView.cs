@@ -58,6 +58,6 @@ namespace MazeSharp
         /// Initializes the canvas for drawing the maze
         /// </summary>
         /// <param name="maze"></param>
-        void Init(Maze maze);
+        void Init(Maze maze, IMazeGenerator algorithm);
     }
 }
