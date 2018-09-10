@@ -1,4 +1,5 @@
 ﻿using System;
+using MazeSharp.Algorithms;
 using SkiaSharp;
 
 namespace MazeSharp
@@ -45,5 +46,18 @@ namespace MazeSharp
         /// Invalidates the entire surface of the control and causes the control to be redrawn.
         /// </summary>
         void Invalidate();
+
+        /// <summary>
+        /// Draw the maze
+        /// </summary>
+        /// <param name="surface"></param>
+        /// <param name="info"></param>
+        void Draw(SKSurface surface, SKImageInfo info);
+
+        /// <summary>
+        /// Initializes the canvas for drawing the maze
+        /// </summary>
+        /// <param name="maze"></param>
+        void Init(Maze maze);
     }
 }
